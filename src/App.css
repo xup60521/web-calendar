@@ -1,0 +1,270 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+:root {
+  --bd:1px solid red;
+  --font: 'Noto Sans TC';
+  --font-color:  rgb(85, 84, 84);
+  --active-color: rgb(40, 43, 60);
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: var(--font);
+  text-decoration: none;
+}
+
+div.App {
+  height: 100vh;
+  display: flex;
+  background-color: rgb(231, 242, 255);
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+/*------------------*/
+  margin: 1.5rem;
+  margin-right: 0rem;
+
+  background-color: white;
+
+  padding: 2rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  /*------------------*/
+  border-radius: 0.6rem;
+  color: var(--font-color);
+}
+
+h2.fill {
+  text-align: center;
+  margin: 2rem;
+  
+}
+
+span.navbutton {
+  display: flex;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  color: var(--font-color);
+}
+
+span.navbutton:hover {
+  color: var(--active-color);
+}
+
+span.navbutton > a {
+  margin-left: 0.3rem;
+  padding-bottom: 0.1rem;
+}
+
+
+
+div.top {
+  /*----------------*/
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+  /*----------------*/
+  display: flex;
+  justify-content: space-between;
+  /*----------------*/
+}
+
+main {
+  margin: 1.5rem;
+  
+  width: 100vw;
+  overflow-y: scroll;
+  border-radius: 0.6rem;
+
+  background-color: white;
+
+  padding: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 0rem;
+  
+}
+
+/* calendar */
+
+div.cal-nav {
+  display: flex;
+  justify-content: space-between;
+  height: 9vh;
+  
+  
+}
+
+div.cal-nav > h1 {
+  color: var(--font-color);
+}
+
+div.calview {
+  overflow-y: scroll;
+}
+
+select#changecalendarviewtype {
+  height: 2rem;
+}
+
+/* Month */
+
+input.changemonth {
+  width: 6rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+  height: 1.5rem;
+  border: none;
+}
+
+button.changemonth {
+  height: 1.5rem;
+  border: none;
+  margin: 0.5rem;
+  margin-bottom: 0rem;
+  margin-top: 0.1rem;
+}
+
+div.monthcontainer > div.caltop {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.1rem;
+}
+
+div.calshowweek {
+  padding-bottom: 0.3rem;
+  text-align: center;
+  display: grid;
+  grid-template-columns: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
+  
+}
+
+div.monthdisplay {
+  display: grid;
+  grid-template-columns: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
+  box-sizing: border-box;
+} 
+
+div.cellcontainer {
+  height: 11vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+div.cellcontainer::-webkit-scrollbar {
+  display: none;
+}
+
+p.celldate {
+  font-size: x-small;
+  padding: 0px;
+  margin: auto;
+  text-align: center;
+}
+
+div.calendarmonthcolorbar {
+  height: 0.25rem;
+  margin: 0.2rem;
+  border-radius: 10%;
+}
+
+/* week */ 
+
+div.weekdisplay {
+  text-align: center;
+  display: grid;
+  grid-template-columns: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
+}
+
+div.weekcontainer > div.caltop {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.1rem;
+  height: 4vh;
+}
+
+input.changeweek {
+  width: 9rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+  height: 1.5rem;
+  border: none;
+}
+
+button.changeweek {
+  height: 1.5rem;
+  border: none;
+  margin: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+div.calweekcontainer {
+  
+  
+}
+
+div.weekdisplay {
+  
+  margin-bottom: 1rem;;
+  
+  overflow-y: scroll;
+}
+
+/* day */
+
+div.selectDate {
+  display: flex;
+  justify-content: center;
+}
+
+button.changedate {
+  height: 1.5rem;
+  border: none;
+  margin: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+input.changedate {
+  width: 9rem;
+  text-align: center;
+  margin-bottom: 0.3rem;
+  height: 1.5rem;
+  border: none;
+}
+
+/* date > item */
+
+div.item {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+button.delete {
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: white;
+  color: #2D4356;
+  width: 50px;
+  height: 30px;
+  padding: 3px;
+  margin: auto;
+  margin-right: 0;
+  font-family: var(--font);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+button.delete:hover {
+  background-color: rgb(219, 218, 218);
+  border-color: rgb(219, 218, 218);
+}
