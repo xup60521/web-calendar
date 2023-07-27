@@ -4,6 +4,8 @@ const GroupSetting = ({ data, setData, settingprofile, setsettingprofile, rerend
 
 /*---------------------------------*/
 
+    /*---------------------------------*/
+
     useEffect(()=> {
         if (localStorage.getItem("user") != null) {
             setData(JSON.parse(localStorage.getItem("user")).posts)
@@ -27,6 +29,7 @@ const GroupSetting = ({ data, setData, settingprofile, setsettingprofile, rerend
         if (localStorage.getItem("setting") != null ) {
             setsettingprofile(JSON.parse(localStorage.getItem("setting")));
         }
+        cachesetting = new Object(settingprofile);
     },["a"])
 
     

@@ -3,30 +3,18 @@ import Month from "./month";
 import Day from "./day";
 import Week from "./week";
 
-const Calendar = ({ data, setData, rerenderStatus, settingprofile }) => {
+const Calendar = ({ data, setData, rerenderStatus, settingprofile, setsettingprofile }) => {
 
     /*---------------------------------*/
 
-    useEffect(()=> {
-        if (localStorage.getItem("user") != null) {
-            setData(JSON.parse(localStorage.getItem("user")).posts)
-        }
-    }, ["a"])
+    
+    
 
-    useEffect(()=> {
-        if (rerenderStatus.current == false) {
-            return;
-        } else {
-            localStorage.setItem('user', JSON.stringify({
-                "posts": data
-            }));
-            rerenderStatus.current = false; 
-        }
-    }, [data]);
+
 
     /*---------------------------------*/
 
-    const [viewType, setviewType] = useState("Month");
+    const [viewType, setviewType] = useState("Day");
     const changeview = (e) => {
         setviewType(e.target.value)
     }
@@ -35,7 +23,7 @@ const Calendar = ({ data, setData, rerenderStatus, settingprofile }) => {
         <div>
             <div className="cal-nav">
                 <h1>Calendar</h1>
-                <select defaultValue="Month" id="changecalendarviewtype"  onChange={changeview}>
+                <select defaultValue="Day" id="changecalendarviewtype"  onChange={changeview}>
                     <option value="Day">Day</option>
                     <option value="Week">Week</option>
                     <option value="Month">Month</option>

@@ -1,7 +1,14 @@
 import { useState } from "react";
 import Popup from "reactjs-popup";
+import { useEffect } from "react";
+
 
 const MonthCell = ({ data, setData, rerenderStatus, selectmonthMonth, selectmonthYear, date, settingprofile }) => {
+
+    
+    
+    console.log(settingprofile)
+
     let monthdata = Array.from(data);
     const whatdateisit = (new String(selectmonthYear))+"-"+(new String(selectmonthMonth).padStart(2, "0"))+"-"+(new String(date)).padStart(2, "0");
     monthdata = monthdata.filter(d => d.date == (whatdateisit));

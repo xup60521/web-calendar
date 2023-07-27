@@ -23,8 +23,12 @@ const App = () => {
 
   /*////////////////////////////*//**////////////////////////////*/
 
-  const [data, setData] = useState([]);
-  const [settingprofile, setsettingprofile] = useState({});
+  let aca = {"group":[]};
+    if (JSON.parse(localStorage.getItem("setting")) != null) {
+        aca = JSON.parse(localStorage.getItem("setting"));
+    }
+    const [data, setData] = useState([]);
+    const [settingprofile, setsettingprofile] = useState(aca);
 
   const rerenderStatus = useRef(false);
   const colorstatus = useRef(false);
@@ -85,7 +89,7 @@ const App = () => {
         <div className="content">
             <Routes>
               <Route path="/" exact element={<Dashboard data={data} />} />
-              <Route path="/Calendar/" exact element={<Calendar data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} />} />
+              <Route path="/Calendar/" exact element={<Calendar data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} setsettingprofile={setsettingprofile} />} />
               <Route path="/Analyse/" exact element={<Analyse />} />
               <Route path="/Data/" exact element={<Data data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} colorstatus={colorstatus} />} />
               <Route exact path="/Group/" element={<GroupSetting data={data} setData={setData} settingprofile={settingprofile} setsettingprofile={setsettingprofile} rerenderStatus={rerenderStatus} colorstatus={colorstatus} />} />
