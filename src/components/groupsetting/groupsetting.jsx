@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setsetting } from "../../redux/datastore";
+import Groupcell from "./groupcell";
 
 const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
@@ -73,7 +74,11 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
                     </datalist>
                     <input type="color" id="inputcolor" value={color} onChange={Changecolor} />
                 </div>
-                {JSON.stringify(reduxsetting)}
+                <div className="groupcellcontainer">
+                    {reduxsetting.group.map((item)=>{
+                        return <Groupcell name={item.name} bcolor={item.color} />
+                    })}
+                </div>
             </div>
         </div>
     )
