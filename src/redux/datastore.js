@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let datacache = [];
 if (JSON.parse(localStorage.getItem("user")) == null) {
-    datacache = []
+    datacache = [];
+    localStorage.setItem("user", JSON.stringify({
+        "posts": []
+    }))
 } else {
     datacache = new Array(JSON.parse(localStorage.getItem("user")).posts);
 }
