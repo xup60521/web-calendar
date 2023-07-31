@@ -27,7 +27,7 @@ const App = () => {
     if (JSON.parse(localStorage.getItem("setting")) != null) {
         aca = JSON.parse(localStorage.getItem("setting"));
     }
-    const [data, setData] = useState([]);
+  
     const [settingprofile, setsettingprofile] = useState(aca);
 
   const rerenderStatus = useRef(false);
@@ -45,26 +45,9 @@ const App = () => {
       })
     }
 
-    /**////////////////////////////*/
-
-    if (localStorage.getItem("user") != null) {
-      setData(JSON.parse(localStorage.getItem("user")).posts)
-  }
-
   }, ["a"])
 
   /*--------------------------------*/
-
-  useEffect(()=> {
-    if (rerenderStatus.current == false) {
-        return;
-    } else {
-        localStorage.setItem('user', JSON.stringify({
-            "posts": data
-        }));
-        rerenderStatus.current = false; 
-    }
-}, [data]);
 
   /*////////////////////////////*//**////////////////////////////*/
 
@@ -88,12 +71,12 @@ const App = () => {
         
         <div className="content">
             <Routes>
-              <Route path="/" exact element={<Dashboard data={data} />} />
-              <Route path="/Calendar/" exact element={<Calendar data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} setsettingprofile={setsettingprofile} />} />
+              <Route path="/" exact element={<Dashboard />} />
+              <Route path="/Calendar/" exact element={<Calendar rerenderStatus={rerenderStatus} />} />
               <Route path="/Analyse/" exact element={<Analyse />} />
-              <Route path="/Data/" exact element={<Data data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} colorstatus={colorstatus} />} />
-              <Route exact path="/Group/" element={<GroupSetting data={data} setData={setData} settingprofile={settingprofile} setsettingprofile={setsettingprofile} rerenderStatus={rerenderStatus} colorstatus={colorstatus} />} />
-              <Route path="/NewEvent/" exact element={<NewEvent data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} />} />
+              <Route path="/Data/" exact element={<Data rerenderStatus={rerenderStatus} colorstatus={colorstatus} />} />
+              <Route exact path="/Group/" element={<GroupSetting rerenderStatus={rerenderStatus} colorstatus={colorstatus} />} />
+              <Route path="/NewEvent/" exact element={<NewEvent rerenderStatus={rerenderStatus} />} />
               <Route path="/Setting/" exact element={<Setting />} />
             </Routes>
         </div>

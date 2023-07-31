@@ -1,20 +1,19 @@
 import { useState } from "react";
 import Popup from "reactjs-popup";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
-const MonthCell = ({ data, setData, rerenderStatus, selectmonthMonth, selectmonthYear, date, settingprofile }) => {
+const MonthCell = ({ rerenderStatus, selectmonthMonth, selectmonthYear, date }) => {
 
-    
-    
-    console.log(settingprofile)
+    const reduxdata = useSelector((state)=> state.data.list);
+    const reduxsetting = useSelector((state)=> state.data.setting);
 
-    let monthdata = Array.from(data);
+    let monthdata = Array.from(reduxdata);
     const whatdateisit = (new String(selectmonthYear))+"-"+(new String(selectmonthMonth).padStart(2, "0"))+"-"+(new String(date)).padStart(2, "0");
     monthdata = monthdata.filter(d => d.date == (whatdateisit));
     const [open, setOpen] = useState(false);  
     const closeModal = () => setOpen(false);
-    let groupsinsetting = (new Object(settingprofile)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
     const [item,setItem] = useState({})
 
     return (
@@ -23,7 +22,7 @@ const MonthCell = ({ data, setData, rerenderStatus, selectmonthMonth, selectmont
                 let group = d.group;
                 let color = "";
                 if (groupsinsetting.indexOf(group) != -1) {
-                    color = settingprofile.group[groupsinsetting.indexOf(group)].color;
+                    color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
                 } else {
                     color = "#2D4356";
                 }
@@ -37,7 +36,7 @@ const MonthCell = ({ data, setData, rerenderStatus, selectmonthMonth, selectmont
                     let color = "";
                     let group = item.group;
                     if (groupsinsetting.indexOf(group) != -1) {
-                        color = settingprofile.group[groupsinsetting.indexOf(group)].color;
+                        color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
                     } else {
                         color = "#2D4356";
                     };

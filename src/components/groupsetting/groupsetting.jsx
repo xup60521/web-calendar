@@ -1,41 +1,23 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setsetting } from "../../redux/datastore";
 
-const GroupSetting = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus, colorstatus }) => {
+const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
 /*---------------------------------*/
-
-    /*---------------------------------*/
-
-    useEffect(()=> {
-        if (localStorage.getItem("user") != null) {
-            setData(JSON.parse(localStorage.getItem("user")).posts)
-        }
-    }, ["a"])
-
-    useEffect(()=> {
-        if (rerenderStatus.current == false) {
-            return;
-        } else {
-            localStorage.setItem('user', JSON.stringify({
-                "posts": data
-            }));
-            rerenderStatus.current = false; 
-        }
-    }, [data]);
-
-    /*---------------------------------*/
-
-    useEffect(()=>{
-        if (localStorage.getItem("setting") != null ) {
-            setsettingprofile(JSON.parse(localStorage.getItem("setting")));
-        }
-        cachesetting = new Object(settingprofile);
-    },["a"])
-
+    const reduxdata = useSelector((state)=> state.data.list);
+    const reduxsetting = useSelector((state)=> state.data.setting);
+    const dispatch = useDispatch();
     
+    let aca = {"group":[]};
+    if (JSON.parse(localStorage.getItem("setting")) != null) {
+        aca = JSON.parse(localStorage.getItem("setting"));
+    }
+  
+    const [settingprofile, setsettingprofile] = useState(aca);
 
     let cachesetting = new Object(settingprofile);
-    let grouplist = data.map((item)=>   item.group    );
+    let grouplist = reduxdata.map((item)=>   item.group    );
     const [selectedgroup, setselectedgroup] = useState("");
     let groupinsetting = cachesetting.group.map((d)=>d.name);
     const ChangeGroup = (e) => {
@@ -65,8 +47,8 @@ const GroupSetting = ({ data, setData, settingprofile, setsettingprofile, rerend
         }
         
         colorstatus.current = true;
-    
-   }, [color, settingprofile])
+        dispatch(setsetting(JSON.parse(localStorage.getItem("setting"))))
+   }, [color])
 
    useEffect(()=>{
     if (groupinsetting.includes(selectedgroup)) {
@@ -91,7 +73,7 @@ const GroupSetting = ({ data, setData, settingprofile, setsettingprofile, rerend
                     </datalist>
                     <input type="color" id="inputcolor" value={color} onChange={Changecolor} />
                 </div>
-                {JSON.stringify(settingprofile)}
+                {JSON.stringify(reduxsetting)}
             </div>
         </div>
     )

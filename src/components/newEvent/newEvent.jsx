@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { v4 } from "uuid"
 import Item from "./item";
+import { useDispatch, useSelector } from "react-redux";
+import { additem, removeitem } from "../../redux/datastore";
 
-const NewEvent = ({data, setData, rerenderStatus, settingprofile}) => {
+const NewEvent = ({ rerenderStatus }) => {
+
+    const reduxdata = useSelector((state)=> state.data.list);
+    const dispatch = useDispatch();
 
     /*------------------------------------*/ 
 
@@ -35,26 +40,26 @@ const NewEvent = ({data, setData, rerenderStatus, settingprofile}) => {
             return 
         };
 
-        setData((prev) => {
-            return [
-                {
-                    id: v4(),
-                    title,
-                    date,
-                    note,
-                    group,
-                },
-                ...prev,
-            ];
-        });
+        
         setTitle("");
         setNote("");
+
+        dispatch(additem(
+            {
+                id: v4(),
+                title,
+                date,
+                note,
+                group,
+            }
+        ))
+
         rerenderStatus.current = true;
     }
 
     /*------------------------------------*/ 
 
-    let list = Array.from(data);
+    let list = Array.from(reduxdata);
     list.sort((a,b)=> {
         let [ay,am,aday] = a.date.split("-");
         let [by,bm,bday] = b.date.split("-");
@@ -87,10 +92,8 @@ const NewEvent = ({data, setData, rerenderStatus, settingprofile}) => {
                     title={title}
                     date={date}
                     note={note}
-                    setData={setData}
                     rerenderStatus={rerenderStatus}
                     group={group}
-                    settingprofile={settingprofile}
                     />
                 )
             })}

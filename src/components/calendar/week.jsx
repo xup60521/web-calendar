@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import WeekCell from "./weekcell";
 
-const Week = ({ data, setData, rerenderStatus, settingprofile }) => {
+const Week = ({ rerenderStatus }) => {
     const currentDate = new Date();
     const [selectdateofaweek, setselectdateofaweek] = useState(currentDate.getFullYear() + "-" + (new String(currentDate.getMonth()+1)).padStart(2, "0") + "-" + (new String(currentDate.getDate())).padStart(2, "0") );
     const changeinputdate = (e) => {
@@ -68,7 +68,7 @@ const Week = ({ data, setData, rerenderStatus, settingprofile }) => {
                             <p className="calweekdate">{(()=>{ 
                                 return ((new String(new Number(d.split("-")[1])))+"/"+(new String(new Number(d.split("-")[2]))))
                             })()}</p>
-                            <WeekCell data={data} date={d} settingprofile={settingprofile} />
+                            <WeekCell date={d} />
                         </div>
                     )
                 })}

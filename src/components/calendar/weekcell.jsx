@@ -1,15 +1,19 @@
 import Popup from "reactjs-popup";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const WeekCell = ({ data, date, settingprofile }) => {
+const WeekCell = ({ date }) => {
 
-    let tasksinaday = Array.from(data).filter(item => item.date == date);
+    const reduxdata = useSelector((state)=> state.data.list);
+    const reduxsetting = useSelector((state)=> state.data.setting);
+
+    let tasksinaday = Array.from(reduxdata).filter(item => item.date == date);
 
     const [open, setOpen] = useState(false);  
     const closeModal = () => setOpen(false);
 
     const [item,setItem] = useState({})
-    let groupsinsetting = (new Object(settingprofile)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
 
     return (
         <div className="weekcellcontainer">
@@ -17,7 +21,7 @@ const WeekCell = ({ data, date, settingprofile }) => {
                 let group = d.group;
                 let color = "";
                 if (groupsinsetting.indexOf(group) != -1) {
-                    color = settingprofile.group[groupsinsetting.indexOf(group)].color;
+                    color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
                 } else {
                     color = "#2D4356";
                 }
@@ -37,7 +41,7 @@ const WeekCell = ({ data, date, settingprofile }) => {
                 let color = "";
                 let group = item.group;
                 if (groupsinsetting.indexOf(group) != -1) {
-                    color = settingprofile.group[groupsinsetting.indexOf(group)].color;
+                    color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
                 } else {
                     color = "#2D4356";
                 };

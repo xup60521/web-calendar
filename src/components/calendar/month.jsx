@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import MonthCell from "./monthcell";
 
-const Month = ({ data, setData, rerenderStatus, settingprofile }) => {
+const Month = ({ rerenderStatus }) => {
 
     let currentDate = new Date();
 
@@ -73,7 +73,7 @@ const Month = ({ data, setData, rerenderStatus, settingprofile }) => {
             {datelist.map((d,i)=>{
                 return (<div className="cellcontainer" id={d}>
                         <p className="celldate">{d}</p>
-                        <MonthCell selectmonthMonth={selectmonthMonth} selectmonthYear={selectmonthYear} data={data} setData={setData} rerenderStatus={rerenderStatus} date={d} settingprofile={settingprofile} />
+                        <MonthCell selectmonthMonth={selectmonthMonth} selectmonthYear={selectmonthYear} rerenderStatus={rerenderStatus} date={d} />
                     </div>)
                 })}
             </div>

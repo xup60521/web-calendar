@@ -1,8 +1,12 @@
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import { useState } from "react";
 import Item from "./item";
+import { useSelector } from "react-redux";
 
-const Day = ({ data, setData, rerenderStatus, settingprofile }) => {
+const Day = ({ rerenderStatus }) => {
+
+    const reduxdata = useSelector((state)=> state.data.list);
+
     let currentDate = new Date();
     const [selectdate, setselectdate] = useState(currentDate.getFullYear() + "-" + (new String(currentDate.getMonth()+1)).padStart(2, "0") + "-" + (new String(currentDate.getDate())).padStart(2, "0") );
     const changedate = (e) => {
@@ -37,7 +41,7 @@ const Day = ({ data, setData, rerenderStatus, settingprofile }) => {
                 <button className="changedate" id="nextdate" onClick={nextdate} ><AiOutlineDoubleRight/></button>
             </div>
             <div className="list">
-                {data.filter(d => d.date == selectdate).map(
+                {reduxdata.filter(d => d.date == selectdate).map(
                     (item) => {
                         const { title, date, note, id, group} = item;
                         return (
@@ -47,10 +51,8 @@ const Day = ({ data, setData, rerenderStatus, settingprofile }) => {
                             title={title}
                             date={date}
                             note={note}
-                            setData={setData}
                             rerenderStatus={rerenderStatus}
                             group={group}
-                            settingprofile={settingprofile}
                             />
                         )
                     }

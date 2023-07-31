@@ -1,33 +1,20 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { additem, replaceitem, setsetting } from "../../redux/datastore";
 
-const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus, colorstatus }) => {
-    /*---------------------------------*/
-
-    useEffect(()=> {
-        if (localStorage.getItem("user") != null) {
-            setData(JSON.parse(localStorage.getItem("user")).posts)
-        }
-    }, ["a"])
-
-    useEffect(()=> {
-        if (rerenderStatus.current == false) {
-            return;
-        } else {
-            localStorage.setItem('user', JSON.stringify({
-                "posts": data
-            }));
-            rerenderStatus.current = false; 
-        }
-    }, [data]);
+const Data = ({ rerenderStatus, colorstatus }) => {
+    
+    const dispatch = useDispatch();
+    const reduxdata = useSelector((state)=> state.data.list);
+    const reduxsetting = useSelector((state)=> state.data.setting);
 
     /*---------------------------------*/
 
-    useEffect(()=>{
-        if (colorstatus.current == true) {
-            localStorage.setItem("setting", JSON.stringify(settingprofile));
-            colorstatus.current = false;
-        }
-    }, [settingprofile]);
+    
+
+    /*---------------------------------*/
+
+    
 
 
     const [InputData, setInputData] = useState("");
@@ -50,38 +37,21 @@ const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus
 
     const replacedata = () => {
         rerenderStatus.current = true;
-        setData(InputData.posts);
+        dispatch(replaceitem(InputData));
     }
 
     const replaceprofile = () => {
         colorstatus.current = true;
-        setsettingprofile(InputProfile)
-        let cachesetting = new Object(settingprofile);
-        localStorage.setItem("setting", JSON.stringify(cachesetting));
+        
+        dispatch(setsetting(InputProfile))
     }
 
     const mergedata = () => {
         rerenderStatus.current = true;
-        setData((prev)=>{
-            return [
-                ...(InputData.posts),
-                ...prev,
-            ]
-        })
+        dispatch(additem((InputData)))
     }
 
-    const mergeprofile = () => {
-        colorstatus = true;
-        
-        let inputlist = InputProfile.group.map((i)=>i.name);
-        let buf = (new Object(settingprofile)).group.filter((i)=>inputlist.includes(i.name)==false);
-        setsettingprofile({
-            "group": [
-                ...(InputProfile.group),
-                ...buf,
-            ]
-        })
-    }
+   
 
     return (
         <div className="app">
@@ -92,7 +62,7 @@ const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus
                         <h3>匯入資料</h3>
                         <input type="file" accept=".json, .csv" onChange={DataInput} />
                         {(()=>{
-                            if (Array.isArray(InputData["posts"])) {
+                            if (Array.isArray(InputData)) {
                                 return (
                                     <div className="inputbuttoncontainer">
                                         <button className="datainputbutton" onClick={replacedata}>取代</button>
@@ -110,7 +80,6 @@ const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus
                                 return (
                                     <div className="inputbuttoncontainer">
                                         <button className="profileinputbutton" onClick={replaceprofile}>取代</button>
-                                        <button className="profileinputbutton" onClick={mergeprofile}>合併</button>
                                     </div>
                                 )
                             }
@@ -121,7 +90,7 @@ const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus
                         <a
                             id="export"
                             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                            JSON.stringify(data)
+                            JSON.stringify(reduxdata)
                             )}`}
                             download="data.json"
                         >
@@ -133,7 +102,7 @@ const Data = ({ data, setData, settingprofile, setsettingprofile, rerenderStatus
                         <a
                             id="export"
                             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                            JSON.stringify(settingprofile)
+                            JSON.stringify(reduxsetting)
                             )}`}
                             download="profile.json"
                         >

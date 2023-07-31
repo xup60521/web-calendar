@@ -1,21 +1,28 @@
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeitem } from "../../redux/datastore";
 
-const Item = ({id, note, date, title, setData, rerenderStatus, group, settingprofile}) => {
+const Item = ({id, note, date, title, rerenderStatus, group }) => {
 
+    const dispatch = useDispatch();
+    const reduxsetting = useSelector((state)=> state.data.setting);
+    
     function deleteItem() {
-        setData(function(prev) {
-            return prev.filter(item=> item.id !== id)
-        })
+        dispatch(removeitem(({
+            "id": id
+        })))
         rerenderStatus.current = true;
     }
 
-    let groupsinsetting = (new Object(settingprofile)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
     let color = "";
     if (groupsinsetting.indexOf(group) != -1) {
-        color = settingprofile.group[groupsinsetting.indexOf(group)].color;
+        color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
     } else {
         color = "#2D4356";
     }
+
+    
 
     const blackandwhite = 0.299*parseInt(color.substring(1,3), 16)+0.587*parseInt(color.substring(3,5), 16)+0.114*parseInt(color.substring(5,7), 16)
     

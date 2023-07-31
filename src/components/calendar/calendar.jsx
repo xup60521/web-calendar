@@ -3,7 +3,8 @@ import Month from "./month";
 import Day from "./day";
 import Week from "./week";
 
-const Calendar = ({ data, setData, rerenderStatus, settingprofile, setsettingprofile }) => {
+
+const Calendar = ({ rerenderStatus }) => {
 
     /*---------------------------------*/
 
@@ -31,9 +32,9 @@ const Calendar = ({ data, setData, rerenderStatus, settingprofile, setsettingpro
             </div>
             <div className="calview">
                 {(()=>{switch(viewType) {
-                    case "Day": return (<Day data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} />);
-                    case "Week": return (<Week data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} />);
-                    case "Month": return (<Month data={data} setData={setData} rerenderStatus={rerenderStatus} settingprofile={settingprofile} />);
+                    case "Day": return (<Day rerenderStatus={rerenderStatus} />);
+                    case "Week": return (<Week rerenderStatus={rerenderStatus} />);
+                    case "Month": return (<Month rerenderStatus={rerenderStatus} />);
                 }})()}
             </div>
         </div>
