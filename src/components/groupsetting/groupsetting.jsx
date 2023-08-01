@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setsetting } from "../../redux/datastore";
 import Groupcell from "./groupcell";
+import CreatableSelect from 'react-select/creatable';
 
 const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
@@ -19,6 +20,12 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
     let cachesetting = new Object(settingprofile);
     let grouplist = reduxdata.map((item)=>   item.group    );
+    let creatableoption = grouplist.map((i)=> {
+        return { value: i, label: i }
+    })
+
+    
+
     const [selectedgroup, setselectedgroup] = useState("");
     let groupinsetting = cachesetting.group.map((d)=>d.name);
     const ChangeGroup = (e) => {
@@ -64,14 +71,7 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
                 <h1>Group Setting</h1>
                 <h3 id="groupsetting">Edit Color</h3>
                 <div className="changecolor">
-                    <input list="grouplist" id="changegroup" value={selectedgroup} onChange={ChangeGroup} />
-                    <datalist id="grouplist">
-                    {grouplist.map((d)=> {
-                        return (
-                            <option value={d} />
-                        )
-                    })}
-                    </datalist>
+                    <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setselectedgroup((e == null ? "" : e.value))}} />
                     <input type="color" id="inputcolor" value={color} onChange={Changecolor} />
                 </div>
                 <div className="groupcellcontainer">

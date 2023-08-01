@@ -1,12 +1,10 @@
 import { MdDashboard, MdOutlineAnalytics } from "react-icons/md"
 import { BsFillCalendarFill } from "react-icons/bs"
 import { AiFillDatabase, AiTwotoneSetting, AiOutlinePlus } from "react-icons/ai"
-import { FiMenu } from "react-icons/fi"
-import { BsSunFill } from "react-icons/bs"
-import {IoMoon} from "react-icons/io5"
 import {FaObjectGroup} from "react-icons/fa"
 import './App.css'
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
+import { useSelector } from "react-redux"
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom"
 import Dashboard from "./components/dashboard/dashboard"
 import Calendar from "./components/calendar/calendar"
@@ -15,37 +13,22 @@ import Data from "./components/data/data"
 import NewEvent from "./components/newEvent/newEvent"
 import Setting from "./components/setting/setting"
 import GroupSetting from "./components/groupsetting/groupsetting"
+import EventPage from "./components/eventpage"
 
 const App = () => {
 
-  const showMenu = useRef("none");
-
+  const reduxdata = useSelector((state)=> state.data.list);
 
   /*////////////////////////////*//**////////////////////////////*/
 
-  let aca = {"group":[]};
-    if (JSON.parse(localStorage.getItem("setting")) != null) {
-        aca = JSON.parse(localStorage.getItem("setting"));
-    }
   
-    const [settingprofile, setsettingprofile] = useState(aca);
 
   const rerenderStatus = useRef(false);
   const colorstatus = useRef(false);
   
   /*////////////////////////////*//**////////////////////////////*/
 
-  useEffect(()=>{
-
-    if (JSON.parse(localStorage.getItem("setting")) != null) {
-      setsettingprofile(JSON.parse(localStorage.getItem("setting")));
-    } else {
-      setsettingprofile({
-        "group": []
-      })
-    }
-
-  }, ["a"])
+  
 
   /*--------------------------------*/
 
@@ -78,6 +61,13 @@ const App = () => {
               <Route exact path="/Group/" element={<GroupSetting rerenderStatus={rerenderStatus} colorstatus={colorstatus} />} />
               <Route path="/NewEvent/" exact element={<NewEvent rerenderStatus={rerenderStatus} />} />
               <Route path="/Setting/" exact element={<Setting />} />
+
+              {reduxdata.map((d)=>{
+                return (
+                  <Route exact path={"/"+d.id} element={<EventPage item={d} />} />
+                )
+              })}
+
             </Routes>
         </div>
       </main>

@@ -2,11 +2,13 @@ import { useState } from "react";
 import { v4 } from "uuid"
 import Item from "./item";
 import { useDispatch, useSelector } from "react-redux";
-import { additem, removeitem } from "../../redux/datastore";
+import { additem } from "../../redux/datastore";
+import CreatableSelect from 'react-select/creatable';
 
 const NewEvent = ({ rerenderStatus }) => {
 
     const reduxdata = useSelector((state)=> state.data.list);
+    const reduxsetting = useSelector((state)=> state.data.setting);
     const dispatch = useDispatch();
 
     /*------------------------------------*/ 
@@ -31,6 +33,12 @@ const NewEvent = ({ rerenderStatus }) => {
     const groupChange = (e) => {
         setGroup(e.target.value);
     }
+
+    let cachesetting = new Object(reduxsetting);
+    let grouplist = reduxdata.map((item)=>   item.group    );
+    let creatableoption = grouplist.map((i)=> {
+        return { value: i, label: i }
+    })
 
     /*------------------------------------*/ 
 
@@ -57,6 +65,8 @@ const NewEvent = ({ rerenderStatus }) => {
         rerenderStatus.current = true;
     }
 
+
+
     /*------------------------------------*/ 
 
     let list = Array.from(reduxdata);
@@ -77,9 +87,9 @@ const NewEvent = ({ rerenderStatus }) => {
                 <p id="date" className="edit">日期</p>
                 <input value={date} onChange={dateChange} type="date" id="date" className="edit" required/>
                 <p id="note" className="edit">內容</p>
-                <input value={note} onChange={noteChange} type="text" id="note" className="edit"/>
+                <textarea value={note} onChange={noteChange} type="text" id="note" className="edit"/>
                 <p id="group" className="edit">群組</p>
-                <input value={group} onChange={groupChange} type="text" id="group" className="edit" />
+                <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setGroup((e == null ? "" : e.value))}} />
                 <button type="submit" className="add" onClick={add}>新增</button>
             </div>
             <div className="item-list">

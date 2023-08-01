@@ -17,13 +17,15 @@ const Groupcell = ({ name, bcolor }) => {
 
 
     return (
-        <NavLink to={"/Group/"+name} style={{ textDecoration: 'none' }} >
-            <div className="groupcell" style={{backgroundColor: bcolor, color: (blackandwhite > 180 ? "black" : "white")}}>
+        
+        <div className="groupcell" style={{backgroundColor: bcolor}}>
+            <NavLink to={"/Group/"+name} style={{ textDecoration: 'none', color: (blackandwhite > 180 ? "black" : "white") }} >
                 <p>{name}</p>
                 <p>{bcolor}</p>
-                <button className="delete" onClick={removegroupcolor}>刪除</button>
-            </div>
-        </NavLink>
+            </NavLink>
+            <button className="delete" onClick={removegroupcolor}>刪除</button>
+        </div>
+        
     )
 }
 
