@@ -3,6 +3,7 @@ import Setting from "../setting/setting";
 import { setsetting } from "../../redux/datastore";
 import { NavLink } from "react-router-dom";
 
+
 const Groupcell = ({ name, bcolor }) => {
 
     const dispatch = useDispatch();
@@ -15,11 +16,12 @@ const Groupcell = ({ name, bcolor }) => {
         dispatch(setsetting(cacheobj));
     }
 
+    
 
     return (
         
         <div className="groupcell" style={{backgroundColor: bcolor}}>
-            <NavLink to={"/Group/"+name} style={{ textDecoration: 'none', color: (blackandwhite > 180 ? "black" : "white") }} >
+            <NavLink to={`/Group/name="${name}"`} style={{ textDecoration: 'none', color: (blackandwhite > 180 ? "black" : "white") }} >
                 <p>{name}</p>
                 <p>{bcolor}</p>
             </NavLink>

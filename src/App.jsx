@@ -14,10 +14,12 @@ import NewEvent from "./components/newEvent/newEvent"
 import Setting from "./components/setting/setting"
 import GroupSetting from "./components/groupsetting/groupsetting"
 import EventPage from "./components/eventpage"
+import GroupPage from "./components/groupPage"
 
 const App = () => {
 
   const reduxdata = useSelector((state)=> state.data.list);
+  const reduxsetting = useSelector((state)=> state.data.setting);
 
   /*////////////////////////////*//**////////////////////////////*/
 
@@ -65,6 +67,12 @@ const App = () => {
               {reduxdata.map((d)=>{
                 return (
                   <Route exact path={"/"+d.id} element={<EventPage item={d} />} />
+                )
+              })}
+
+              {reduxsetting.group.map((d)=>{
+                return (
+                  <Route exact path={`/Group/name="${d.name}"`} element={<GroupPage setting={d} />} />
                 )
               })}
 

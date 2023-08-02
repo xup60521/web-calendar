@@ -50,9 +50,13 @@ export const dataSlice = createSlice({
         setsetting: (state, action) => {
             state.setting = action.payload;
             localStorage.setItem("setting", JSON.stringify(state.setting));
+        },
+        newgroupsetting: (state, action) => {
+            state.setting.group.push(action.payload);
+            localStorage.setItem("setting", JSON.stringify(state.setting));
         }
     }
 });
 
-export const { additem, removeitem, replaceitem, setsetting } = dataSlice.actions;
+export const { additem, removeitem, replaceitem, setsetting, newgroupsetting } = dataSlice.actions;
 export default dataSlice.reducer;

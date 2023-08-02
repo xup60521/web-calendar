@@ -14,8 +14,8 @@ const Data = ({ rerenderStatus, colorstatus }) => {
 
     /*---------------------------------*/
 
-    
 
+ 
 
     const [InputData, setInputData] = useState("");
     const DataInput = (e) => {

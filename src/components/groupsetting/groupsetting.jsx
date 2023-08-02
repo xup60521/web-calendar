@@ -28,9 +28,6 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
     const [selectedgroup, setselectedgroup] = useState("");
     let groupinsetting = cachesetting.group.map((d)=>d.name);
-    const ChangeGroup = (e) => {
-        setselectedgroup(e.target.value);
-    }
 
     const [color, setcolor] = useState("#ffffff");
     const Changecolor = (e) => {
@@ -69,7 +66,7 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
         <div className="app">
             <div className="groupsetting">
                 <h1>Group Setting</h1>
-                <h3 id="groupsetting">Edit Color</h3>
+                <h3 id="groupsetting">New / Edit</h3>
                 <div className="changecolor">
                     <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setselectedgroup((e == null ? "" : e.value))}} />
                     <input type="color" id="inputcolor" value={color} onChange={Changecolor} />

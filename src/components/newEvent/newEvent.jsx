@@ -2,7 +2,7 @@ import { useState } from "react";
 import { v4 } from "uuid"
 import Item from "./item";
 import { useDispatch, useSelector } from "react-redux";
-import { additem } from "../../redux/datastore";
+import { additem, newgroupsetting } from "../../redux/datastore";
 import CreatableSelect from 'react-select/creatable';
 
 const NewEvent = ({ rerenderStatus }) => {
@@ -34,8 +34,10 @@ const NewEvent = ({ rerenderStatus }) => {
         setGroup(e.target.value);
     }
 
-    let cachesetting = new Object(reduxsetting);
-    let grouplist = reduxdata.map((item)=>   item.group    );
+    const [cachesettingstate, setcachesettingstate] = useState(new Object(reduxsetting));
+
+    let cachesetting = new Object(cachesettingstate);
+    let grouplist = cachesettingstate.group.map((item)=>   item.name    );
     let creatableoption = grouplist.map((i)=> {
         return { value: i, label: i }
     })
@@ -61,6 +63,15 @@ const NewEvent = ({ rerenderStatus }) => {
                 group,
             }
         ))
+
+        if (grouplist.indexOf(group) == -1) {
+            dispatch(newgroupsetting(
+                {
+                    "name": group,
+                    "color": "#2D4356"
+                }
+            ))
+        }
 
         rerenderStatus.current = true;
     }
