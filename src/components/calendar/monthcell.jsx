@@ -13,8 +13,13 @@ const MonthCell = ({ rerenderStatus, selectmonthMonth, selectmonthYear, date }) 
     monthdata = monthdata.filter(d => d.date == (whatdateisit));
     const [open, setOpen] = useState(false);  
     const closeModal = () => setOpen(false);
-    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.id);
     const [item,setItem] = useState({})
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.id] = i.name;
+    })
 
     return (
         <div className="cell">
@@ -44,7 +49,7 @@ const MonthCell = ({ rerenderStatus, selectmonthMonth, selectmonthYear, date }) 
                         <Popup open={open} closeOnDocumentClick onClose={closeModal} >
                             <div className="modal" id="calendarweekclickevent" style={{border: `2px solid ${color}`}}>
                                 <p className="item title">{item.title}</p>
-                                <p className="item date">{item.date+" "+item.group}</p>
+                                <p className="item date">{item.date+" "+dict[item.group]}</p>
                                 <p className="item note">{item.note}</p>
                             </div>
                         </Popup>

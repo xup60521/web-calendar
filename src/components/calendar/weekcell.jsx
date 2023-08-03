@@ -13,7 +13,12 @@ const WeekCell = ({ date }) => {
     const closeModal = () => setOpen(false);
 
     const [item,setItem] = useState({})
-    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.id);
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.id] = i.name;
+    })
 
     return (
         <div className="weekcellcontainer">
@@ -49,7 +54,7 @@ const WeekCell = ({ date }) => {
                     <Popup open={open} closeOnDocumentClick onClose={closeModal} >
                         <div className="modal" id="calendarweekclickevent" style={{border: `2px solid ${color}`}}>
                             <p className="item title">{item.title}</p>
-                            <p className="item date">{item.date+" "+item.group}</p>
+                            <p className="item date">{item.date+" "+dict[item.group]}</p>
                             <p className="item note">{item.note}</p>
                         </div>
                     </Popup>
