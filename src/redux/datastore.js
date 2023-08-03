@@ -15,6 +15,7 @@ if (JSON.parse(localStorage.getItem("setting")) == null) {
     settingcache = {
         "group": []
     }
+    localStorage.setItem("setting", JSON.stringify(settingcache));
 } else {
     settingcache = JSON.parse(localStorage.getItem("setting"));
 }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaSquareFull } from "react-icons/fa"
 import CreatableSelect from 'react-select/creatable';
+import { v4 } from "uuid";
 
 const EventPage = ({ item }) => {
 
@@ -20,7 +21,7 @@ const EventPage = ({ item }) => {
 
     const reduxsetting = useSelector((state)=> state.data.setting);
     
-    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.id);
     let color = "";
     if (groupsinsetting.indexOf(editGroup) != -1) {
         color = reduxsetting.group[groupsinsetting.indexOf(editGroup)].color;
@@ -34,8 +35,13 @@ const EventPage = ({ item }) => {
     }
 
     
-    let creatableoption = groupsinsetting.map((i)=> {
-        return { value: i, label: i }
+    let creatableoption =reduxsetting.group.map((i)=> {
+        return { value: i.id, label: i.name }
+    })
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.id] = i.name;
     })
 
     /*--------------*/
@@ -53,20 +59,33 @@ const EventPage = ({ item }) => {
         dispatch(removeitem({
             "id": id
         }));
-        dispatch(additem(
-            {
-                "id": id,
-                "title": editTitle,
-                "date": editDate,
-                "note": editNote,
-                "group": editGroup,
-            }
-        ))
+        
         if (groupsinsetting.indexOf(editGroup) == -1) {
+            let uuid = v4()
             dispatch(newgroupsetting(
                 {
                     "name": editGroup,
-                    "color": "#2D4356"
+                    "color": "#2D4356",
+                    "id": uuid,
+                }
+            ));
+            dispatch(additem(
+                {
+                    "id": id,
+                    "title": editTitle,
+                    "date": editDate,
+                    "note": editNote,
+                    "group": uuid,
+                }
+            ))
+        } else {
+            dispatch(additem(
+                {
+                    "id": id,
+                    "title": editTitle,
+                    "date": editDate,
+                    "note": editNote,
+                    "group": editGroup,
                 }
             ))
         }
@@ -93,9 +112,9 @@ const EventPage = ({ item }) => {
                                 <div id="forthline">
                                     <input className="date" type="date" value={date} readOnly />
                                     <a style={{color: color}}><FaSquareFull /></a>
-                                    <input className="group" type="text" value={group} readOnly  />
+                                    <input className="group" type="text" value={(dict[editGroup] != null ? (dict[editGroup] == "" ? "未分類" : dict[editGroup]) : editGroup)} readOnly  />
                                 </div>
-                                <div id="note" contenteditable>
+                                <div id="note">
                                     <textarea className="note" value={note} readOnly ></textarea>
                                 </div>
                             </div>
@@ -127,10 +146,10 @@ const EventPage = ({ item }) => {
                                 <div id="forthline">
                                     <input className="date" type="date" value={editDate} onChange={(e)=>changeEditDate(e.target.value)} />
                                     <a style={{color: color}}><FaSquareFull /></a>
-                                    <input className="group" type="text" value={editGroup} onChange={(e)=>changeEditGroup(e.target.value)} />
-                                    <CreatableSelect isClearable options={creatableoption} defaultInputValue={editGroup} onChange={(e)=>changeEditGroup((e == null ? "" : e.value))}  />
+                                    <input className="group" type="text" value={(dict[editGroup] != null ? (dict[editGroup] == "" ? "未分類" : dict[editGroup]) : editGroup)} readOnly />
                                 </div>
-                                <div id="note" contenteditable>
+                                <CreatableSelect isClearable options={creatableoption} defaultInputValue={editGroup} onChange={(e)=>changeEditGroup((e == null ? "" : e.value))}  />
+                                <div id="note">
                                     <textarea className="note" name="note" cols="30" rows="10" value={editNote} onChange={(e)=>changeEditNote(e.target.value)}></textarea>
                                 </div>
                             </div>

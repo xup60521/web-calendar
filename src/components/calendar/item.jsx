@@ -8,13 +8,23 @@ const Item = ({id, note, date, title, rerenderStatus, group }) => {
     const reduxsetting = useSelector((state)=> state.data.setting);
     
     function deleteItem() {
-        dispatch(removeitem(({
-            "id": id
-        })))
-        rerenderStatus.current = true;
+
+        if (window.confirm("確定刪除？")) {
+            dispatch(removeitem(({
+                "id": id
+            })))
+            rerenderStatus.current = true;
+        } else {
+            return ;
+        }
     }
 
-    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.name);
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.id] = i.name;
+    })
+
+    let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.id);
     let color = "";
     if (groupsinsetting.indexOf(group) != -1) {
         color = reduxsetting.group[groupsinsetting.indexOf(group)].color;
@@ -35,7 +45,7 @@ const Item = ({id, note, date, title, rerenderStatus, group }) => {
             <div className="content" style={{color: (blackandwhite > 180 ? "black" : "white")}}>
                 <p className="item title">{title}</p>
                 <div>
-                    <p className="item date">{date+" "+group}</p>
+                    <p className="item date">{date+" "+(dict[group] != null ? dict[group] : "未分類")}</p>
                 </div>
                 <p className="item note">{note}</p>
             </div>

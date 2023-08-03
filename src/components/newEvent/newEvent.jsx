@@ -37,11 +37,11 @@ const NewEvent = ({ rerenderStatus }) => {
     const [cachesettingstate, setcachesettingstate] = useState(new Object(reduxsetting));
 
     let cachesetting = new Object(cachesettingstate);
-    let grouplist = cachesettingstate.group.map((item)=>   item.name    );
-    let creatableoption = grouplist.map((i)=> {
-        return { value: i, label: i }
-    })
+    let grouplist = reduxsetting.group.map((item)=>   item.id    );
 
+    let creatableoption =reduxsetting.group.map((i)=> {
+        return { value: i.id, label: i.name }
+    })
     /*------------------------------------*/ 
 
     const add = () => {
@@ -54,24 +54,40 @@ const NewEvent = ({ rerenderStatus }) => {
         setTitle("");
         setNote("");
 
-        dispatch(additem(
-            {
-                id: v4(),
-                title,
-                date,
-                note,
-                group,
-            }
-        ))
-
         if (grouplist.indexOf(group) == -1) {
+            let uuid = v4();
             dispatch(newgroupsetting(
                 {
                     "name": group,
-                    "color": "#2D4356"
+                    "color": "#2D4356",
+                    "id": uuid
+                }
+            ))
+            dispatch(additem(
+                {
+                    id: v4(),
+                    title,
+                    date,
+                    note,
+                    "group": uuid,
+                }
+            ))
+        } else {
+            dispatch(additem(
+                {
+                    id: v4(),
+                    title,
+                    date,
+                    note,
+                    group,
+                    
                 }
             ))
         }
+
+        
+
+        
 
         rerenderStatus.current = true;
     }

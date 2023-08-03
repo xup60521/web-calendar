@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setsetting } from "../../redux/datastore";
 import Groupcell from "./groupcell";
 import CreatableSelect from 'react-select/creatable';
+import { v4 } from "uuid";
 
 const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
@@ -19,27 +20,48 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
     const [settingprofile, setsettingprofile] = useState(aca);
 
     let cachesetting = new Object(settingprofile);
-    let grouplist = reduxdata.map((item)=>   item.group    );
-    let creatableoption = grouplist.map((i)=> {
-        return { value: i, label: i }
-    })
 
+    let creatableoption =reduxsetting.group.map((i)=> {
+        return { value: i.id, label: i.name }
+    })
     
 
     const [selectedgroup, setselectedgroup] = useState("");
-    let groupinsetting = cachesetting.group.map((d)=>d.name);
+    let groupinsetting = cachesetting.group.map((d)=>d.id);
+
+    const [rawgroup, setrawgroup] = useState({
+        "name": undefined,
+        "id": undefined,
+    });
 
     const [color, setcolor] = useState("#ffffff");
     const Changecolor = (e) => {
         setcolor(e.target.value);
+        groupinsetting = cachesetting.group.map((d)=>d.id);
         let indexofgroup = groupinsetting.indexOf(selectedgroup);
         if (indexofgroup != -1) {
             cachesetting.group[indexofgroup].color = color;
-        } else {
+        } 
+        else if (rawgroup.name == selectedgroup) {
+            groupinsetting = cachesetting.group.map((d)=>d.id);
+            indexofgroup = groupinsetting.indexOf(rawgroup.id);
+            cachesetting.group[indexofgroup].color = color;
+        }
+        else
+         {
+            const uuid = v4()
             cachesetting.group.push({
                 "name": selectedgroup,
                 "color": color,
+                "id": uuid,
             })
+            setrawgroup({
+                "name": selectedgroup,
+                "id": uuid
+            });
+                
+            
+            creatableoption.push({ value: uuid, label: selectedgroup});
         }
     }
 
@@ -57,7 +79,7 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
    useEffect(()=>{
     if (groupinsetting.includes(selectedgroup)) {
-        setcolor(cachesetting.group.filter(i=>i.name==selectedgroup)[0].color);
+        setcolor(cachesetting.group.filter(i=>i.id==selectedgroup)[0].color);
         }
    },[selectedgroup])
    
@@ -73,7 +95,7 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
                 </div>
                 <div className="groupcellcontainer">
                     {reduxsetting.group.map((item)=>{
-                        return <Groupcell name={item.name} bcolor={item.color} />
+                        return <Groupcell name={item.name} bcolor={item.color} id={item.id} />
                     })}
                 </div>
             </div>

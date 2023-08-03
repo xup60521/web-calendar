@@ -3,9 +3,9 @@ import { BsFillCalendarFill } from "react-icons/bs"
 import { AiFillDatabase, AiTwotoneSetting, AiOutlinePlus } from "react-icons/ai"
 import {FaObjectGroup} from "react-icons/fa"
 import './App.css'
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom"
+import { HashRouter, NavLink, Route, Routes, json } from "react-router-dom"
 import Dashboard from "./components/dashboard/dashboard"
 import Calendar from "./components/calendar/calendar"
 import Analyse from "./components/analyse/analyse"
@@ -14,7 +14,8 @@ import NewEvent from "./components/newEvent/newEvent"
 import Setting from "./components/setting/setting"
 import GroupSetting from "./components/groupsetting/groupsetting"
 import EventPage from "./components/eventpage"
-import GroupPage from "./components/groupPage"
+import GroupPage from "./components/groupsetting/groupPage"
+import { v4 } from "uuid"
 
 const App = () => {
 
@@ -30,7 +31,14 @@ const App = () => {
   
   /*////////////////////////////*//**////////////////////////////*/
 
-  
+  useEffect(()=>{
+    
+    
+
+    
+
+  }, ["a"])
+
 
   /*--------------------------------*/
 

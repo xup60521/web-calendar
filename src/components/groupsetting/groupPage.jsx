@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { additem, removeitem } from "../redux/datastore";
+import { additem, removeitem } from "../../redux/datastore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSquareFull } from "react-icons/fa"
@@ -20,6 +20,19 @@ const GroupPage = ({setting}) => {
         changeEditName(name);
         changeEditColor(color);
     }
+
+    let grouplist = reduxsetting.group.map((item)=>   item.name    );
+    let groupset = new Set();
+    grouplist.forEach(element => {
+        groupset.add(element);
+    });
+    reduxdata.forEach((e)=>{
+        groupset.add(e.group);
+    })
+
+    let creatableoption =[...groupset].map((i)=> {
+        return { value: i, label: i }
+    })
 
     return (
     <div className="groupPage">

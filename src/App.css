@@ -354,25 +354,32 @@ div.eventpagecontainer >  input.title {
   font-weight: bold;
 }
 
-div.eventpagecontainer > div > input.date {
+div#forthline {
+  align-items: center;
+  display: flex;  
+}
+
+div#forthline > input.date {
   border: none;
   font-weight: bold;
   color: black;
   font-size: medium;
   margin-right: 0.5rem;
+  flex-shrink: 0;
 }
 
-div.eventpagecontainer > div > input.group {
+div#forthline > input.group {
   border: none;
   font-weight: bold;
   color: black;
   font-size: medium;
-  width: auto;
   margin-left: 0.3rem;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
-div.eventpagecontainer > div#forthline {
-  align-items: center;
+div.forthline:last-child {
+  flex-grow: 1;
 }
 
 div.eventpagecontainer > div#forthline > a > * {
