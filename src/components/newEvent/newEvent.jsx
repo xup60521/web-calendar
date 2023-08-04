@@ -42,6 +42,11 @@ const NewEvent = ({ rerenderStatus }) => {
     let creatableoption =reduxsetting.group.map((i)=> {
         return { value: i.id, label: i.name }
     })
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.name] = i.id;
+    })
     /*------------------------------------*/ 
 
     const add = () => {
@@ -54,7 +59,7 @@ const NewEvent = ({ rerenderStatus }) => {
         setTitle("");
         setNote("");
 
-        if (grouplist.indexOf(group) == -1) {
+        if (grouplist.indexOf(group) == -1 & dict[group] == null) {
             let uuid = v4();
             dispatch(newgroupsetting(
                 {
@@ -72,20 +77,20 @@ const NewEvent = ({ rerenderStatus }) => {
                     "group": uuid,
                 }
             ))
-        } else {
+        }  else {
             dispatch(additem(
                 {
                     id: v4(),
                     title,
                     date,
                     note,
-                    group,
+                    "group": (group != ""? group : dict[group]),
                     
                 }
             ))
         }
 
-        
+        console.log(grouplist)
 
         
 
@@ -106,18 +111,21 @@ const NewEvent = ({ rerenderStatus }) => {
     /*------------------------------------*/ 
 
     return (
-        <div>
-            <h1>New Event</h1>
-            <div className="input-container">
-                <p id="title" className="edit">標題</p>
-                <input value={title} onChange={titleChange} type="text" id="title" className="edit" required/>
-                <p id="date" className="edit">日期</p>
-                <input value={date} onChange={dateChange} type="date" id="date" className="edit" required/>
-                <p id="note" className="edit">內容</p>
-                <textarea value={note} onChange={noteChange} type="text" id="note" className="edit"/>
-                <p id="group" className="edit">群組</p>
-                <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setGroup((e == null ? "" : e.value))}} />
-                <button type="submit" className="add" onClick={add}>新增</button>
+        <div className="newEvent">            
+            <div className="newEvent-left">
+                <h1>New Event</h1>
+                <div className="inputsection">
+                    <p id="title" className="edit">標題</p>
+                    <input value={title} onChange={titleChange} type="text" id="title" className="edit" required/>
+                    <p id="date" className="edit">日期</p>
+                    <input value={date} onChange={dateChange} type="date" id="date" className="edit" required/>
+                    <p id="note" className="edit">內容</p>
+                    <textarea value={note} onChange={noteChange} type="text" id="note" className="edit"/>
+                    <p id="group" className="edit">群組</p>
+                    <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setGroup((e == null ? "" : e.value))}} />
+                    <button type="submit" className="add" onClick={add}>新增</button>
+                </div>
+                <div></div>
             </div>
             <div className="item-list">
             {list.map((item) => {

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeitem, additem, newgroupsetting } from "../redux/datastore";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaSquareFull } from "react-icons/fa"
 import CreatableSelect from 'react-select/creatable';
@@ -20,12 +20,26 @@ const EventPage = ({ item }) => {
     const dispatch = useDispatch();
 
     const reduxsetting = useSelector((state)=> state.data.setting);
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.id] = i.name;
+    })
+
+    let name2id = {};
+    reduxsetting.group.map((i)=>{
+        name2id[i.name] = i.id;
+    })
     
     let groupsinsetting = (new Object(reduxsetting)).group.map(i=>i.id);
     let color = "";
     if (groupsinsetting.indexOf(editGroup) != -1) {
         color = reduxsetting.group[groupsinsetting.indexOf(editGroup)].color;
-    } else {
+    } //非id，為name
+    else if (name2id[editGroup] != null) {
+        color = reduxsetting.group[groupsinsetting.indexOf(name2id[editGroup])].color;
+    }
+    else {
         color = "#2D4356";
     }
     const blackandwhite = 0.299*parseInt(color.substring(1,3), 16)+0.587*parseInt(color.substring(3,5), 16)+0.114*parseInt(color.substring(5,7), 16)
@@ -39,10 +53,7 @@ const EventPage = ({ item }) => {
         return { value: i.id, label: i.name }
     })
 
-    let dict = {};
-    reduxsetting.group.map((i)=>{
-      dict[i.id] = i.name;
-    })
+    
 
     /*--------------*/
 
@@ -60,7 +71,7 @@ const EventPage = ({ item }) => {
             "id": id
         }));
         
-        if (groupsinsetting.indexOf(editGroup) == -1) {
+        if (groupsinsetting.indexOf(editGroup) == -1 & name2id[editGroup] == null) {
             let uuid = v4()
             dispatch(newgroupsetting(
                 {
@@ -85,7 +96,7 @@ const EventPage = ({ item }) => {
                     "title": editTitle,
                     "date": editDate,
                     "note": editNote,
-                    "group": editGroup,
+                    "group": (editGroup == "" ? name2id[editGroup] : editGroup),
                 }
             ))
         }
@@ -112,7 +123,7 @@ const EventPage = ({ item }) => {
                                 <div id="forthline">
                                     <input className="date" type="date" value={date} readOnly />
                                     <a style={{color: color}}><FaSquareFull /></a>
-                                    <input className="group" type="text" value={(dict[editGroup] != null ? (dict[editGroup] == "" ? "未分類" : dict[editGroup]) : editGroup)} readOnly  />
+                                    <NavLink to={`/Group/id="${group}"`}><input className="group" type="text" value={(dict[group] != null ? (dict[group] == "" ? "未分類" : dict[group]) : group)} readOnly  /></NavLink>
                                 </div>
                                 <div id="note">
                                     <textarea className="note" value={note} readOnly ></textarea>
@@ -146,7 +157,7 @@ const EventPage = ({ item }) => {
                                 <div id="forthline">
                                     <input className="date" type="date" value={editDate} onChange={(e)=>changeEditDate(e.target.value)} />
                                     <a style={{color: color}}><FaSquareFull /></a>
-                                    <input className="group" type="text" value={(dict[editGroup] != null ? (dict[editGroup] == "" ? "未分類" : dict[editGroup]) : editGroup)} readOnly />
+                                    <a><input className="group" type="text" value={(dict[editGroup] != null ? (dict[editGroup] == "" ? "未分類" : dict[editGroup]) : editGroup)} readOnly /></a>
                                 </div>
                                 <CreatableSelect isClearable options={creatableoption} defaultInputValue={editGroup} onChange={(e)=>changeEditGroup((e == null ? "" : e.value))}  />
                                 <div id="note">

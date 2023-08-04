@@ -7,6 +7,8 @@ import { v4 } from "uuid";
 
 const GroupSetting = ({ rerenderStatus, colorstatus }) => {
 
+    
+
 /*---------------------------------*/
     const reduxdata = useSelector((state)=> state.data.list);
     const reduxsetting = useSelector((state)=> state.data.setting);
@@ -34,11 +36,18 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
         "id": undefined,
     });
 
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.name] = i.id;
+    })
+
     const [color, setcolor] = useState("#ffffff");
+
     const Changecolor = (e) => {
         setcolor(e.target.value);
         groupinsetting = cachesetting.group.map((d)=>d.id);
         let indexofgroup = groupinsetting.indexOf(selectedgroup);
+
         if (indexofgroup != -1) {
             cachesetting.group[indexofgroup].color = color;
         } 
@@ -46,6 +55,10 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
             groupinsetting = cachesetting.group.map((d)=>d.id);
             indexofgroup = groupinsetting.indexOf(rawgroup.id);
             cachesetting.group[indexofgroup].color = color;
+            console.log("works")
+        } 
+        else if (indexofgroup == -1 & dict[selectedgroup] != null ) {
+            cachesetting.group[groupinsetting.indexOf(dict[selectedgroup])].color = color;
         }
         else
          {
@@ -87,7 +100,7 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
     return (
         <div className="app">
             <div className="groupsetting">
-                <h1>Group Setting</h1>
+                <h1>Group</h1>
                 <h3 id="groupsetting">New / Edit</h3>
                 <div className="changecolor">
                     <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setselectedgroup((e == null ? "" : e.value))}} />

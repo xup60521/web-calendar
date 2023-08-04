@@ -4,7 +4,9 @@
   --bd:1px solid red;
   --font: 'Noto Sans TC';
   --font-color:  rgb(85, 84, 84);
-  --active-color: rgb(40, 43, 60);
+  --active-color: rgb(30, 49, 177);
+  --box-shadow: 0 2rem 3rem rgba(85, 84, 84, 0.208);
+  --backgroun-color: rgb(234, 235, 236);
 }
 
 * {
@@ -18,7 +20,11 @@
 div.App {
   height: 100vh;
   display: flex;
-  background-color: rgb(231, 242, 255);
+  background-color: var(--backgroun-color);
+}
+
+div.top-bar {
+  display: none;
 }
 
 aside {
@@ -30,13 +36,20 @@ aside {
   margin-right: 0rem;
 
   background-color: white;
-
+  width: 9rem;
   padding: 2rem;
   padding-left: 0rem;
   padding-right: 0rem;
   /*------------------*/
   border-radius: 0.6rem;
   color: var(--font-color);
+  box-shadow: var(--box-shadow);
+  flex-shrink: 0;
+  
+}
+
+button.defaultbutton {
+  box-sizing: border-box;
 }
 
 h2.fill {
@@ -47,21 +60,34 @@ h2.fill {
 
 span.navbutton {
   display: flex;
-  padding-left: 1.3rem;
-  padding-right: 1.3rem;
+  padding: 1rem 0rem 1rem 1.3rem;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 0.6rem;
   color: var(--font-color);
+  height: 3rem;
+  transition: all 0.2s ease;
 }
 
 span.navbutton:hover {
+  padding-left: 1.7rem;
   color: var(--active-color);
+  transition: all 0.2s ease;
 }
+
+span.navbutton:active {
+  background-color: var(--backgroun-color);
+}
+
+span.navbutton:active::after {
+  background-color: var(--backgroun-color);
+}
+
 
 span.navbutton > a {
   margin-left: 0.3rem;
   padding-bottom: 0.1rem;
 }
+
 
 
 
@@ -88,13 +114,56 @@ main {
   padding: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 0rem;
-  
+  box-shadow: var(--box-shadow);
 }
 
 div.content {
   height: 100%;
   
 }
+
+div.content > div {
+  animation: fadeIn 0.3s;
+  animation-timing-function: cubic-bezier(.03,.69,.33,.93);
+}
+
+
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* new event */
+
+div.newEvent {
+  display: flex;
+  height: 100%;
+}
+
+div.newEvent-left {
+  text-align: left;
+  margin-right: 1.5rem;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+div.newEvent-left > div.inputsection > * {
+  margin: 0.2rem 0rem 0.2rem 0rem;
+  width: 100%;
+}
+
+div.newEvent-left > div.inputsection > button.add {
+  border: none;
+  padding: 0.35rem;
+  margin-top: 0.3rem;
+}
+
+div.newEvent > div.item-list {
+  overflow-y: scroll;
+}
+
+
 
 /* calendar */
 
@@ -298,7 +367,8 @@ div.changecolor > input {
 div.groupcellcontainer {
   padding-top: 1.5rem;
   margin-left: -0.2rem;
-  
+  transition: all 0.2s ease;
+  justify-content: center;
 }
 
 div.groupcell {
@@ -310,6 +380,16 @@ div.groupcell {
   text-align: center;
   border-radius: 0.5rem;
   padding-top: 0.7rem;
+  margin-top: 1rem;
+  transition: all 0.55s ease;
+}
+
+div.groupcell:hover {
+  font-size: x-large;
+  transition: all 0.15s ease;
+  padding: 0.8rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
 }
 
 div.groupcell > a {
@@ -321,11 +401,48 @@ div.groupcell > button {
   margin-top: 0.6rem;;
 }
 
-datalist#grouplist > option {
-  background-color: white;
+div.groupPagecontainer  {
+  
+}
+
+div.groupPagecontainer > div#top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+div.groupPagecontainer > div#top > input#groupname {
+  border: none;
+  font-size: xx-large;
+  font-weight: bold;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 1rem;
+  
+}
+
+div.groupPagecontainer > div#top > input#groupcolor {
+  width: 2rem;
+  border: none;
+  padding: 0.1rem;
+  margin-right: 0.5rem;
+  margin-top: 0.3rem;
+  flex-shrink: 0;
+}
+
+div.groupPagecontainer > div  {
+  margin-bottom: 0.5rem;
+}
+
+div.groupitemcontainer {
+  margin-top: 1rem;
+  display: flex;
   color: black;
 }
 
+div.groupitemcontainer > div.groupitem {
+  margin-right: 1rem;
+}
 
 /* Event Page */
 
@@ -336,7 +453,6 @@ div.fullheight {
 div.eventpagecontainer {
   height: 100%;
   border-radius: 0.5rem;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   
@@ -368,7 +484,7 @@ div#forthline > input.date {
   flex-shrink: 0;
 }
 
-div#forthline > input.group {
+div#forthline >  a > input.group {
   border: none;
   font-weight: bold;
   color: black;

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { additem, removeitem } from "../../redux/datastore";
+import { removeitem, setsetting } from "../../redux/datastore";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaSquareFull } from "react-icons/fa"
 
 const GroupPage = ({setting}) => {
@@ -21,6 +21,8 @@ const GroupPage = ({setting}) => {
         changeEditColor(color);
     }
 
+    
+
     let grouplist = reduxsetting.group.map((item)=>   item.name    );
     let groupset = new Set();
     grouplist.forEach(element => {
@@ -30,9 +32,17 @@ const GroupPage = ({setting}) => {
         groupset.add(e.group);
     })
 
-    let creatableoption =[...groupset].map((i)=> {
-        return { value: i, label: i }
-    })
+    let cachedata = (new Array(reduxdata)).flat().filter(item => item["group"] == setting.id).flat();
+
+    const saveChange = () => {
+        let cacheprofile = JSON.parse(localStorage.getItem("setting"));
+        let idlist = cacheprofile.group.flat().map((i)=>{return i.id});
+        cacheprofile.group = cacheprofile.group.flat();
+        cacheprofile.group[idlist.indexOf(setting.id)].name = editName;
+        cacheprofile.group[idlist.indexOf(setting.id)].color = editColor;
+        dispatch(setsetting(cacheprofile));
+        changeEditmode(false);
+    }
 
     return (
     <div className="groupPage">
@@ -45,9 +55,21 @@ const GroupPage = ({setting}) => {
                                 <button onClick={()=>{goback(-1)}}>返回</button>
                                 <button onClick={()=>changeEditmode(true)}>Edit</button>
                             </div>
-                            <div>
-                                <input type="text" value={name} readOnly />
-                                <input type="color" value={color} disabled />
+                            <div id="top">
+                                <input type="color" id="groupcolor" value={color} disabled />
+                                <input type="text" id="groupname" value={name} readOnly />
+                            </div>
+                            <div className="groupitemcontainer">
+                                {cachedata.flat().map((item, i)=>{
+                                    return (
+                                    <div className="groupitem">
+                                        <NavLink to={`/${item.id}/`} style={{color: "black"}}>
+                                            <h3>{item.title}</h3>
+                                            <h5>{item.date}</h5>
+                                        </NavLink>
+                                    </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     )
@@ -62,12 +84,12 @@ const GroupPage = ({setting}) => {
                                 }}>
                                     放棄更改
                                 </button>
-                                <button onClick={()=>{}}>儲存</button>
+                                <button onClick={()=>{saveChange()}}>儲存</button>
                                 <button>刪除群組</button>
                             </div>
-                            <div>
-                                <input type="text" value={editName} onChange={(e)=>{changeEditName(e.target.value)}} />
-                                <input type="color" value={editColor} onChange={(e)=>{changeEditColor(e.target.value)}} />
+                            <div id="top">                                
+                                <input type="color" id="groupcolor" value={editColor} onChange={(e)=>{changeEditColor(e.target.value)}} />
+                                <input type="text" id="groupname" value={editName} onChange={(e)=>{changeEditName(e.target.value)}} />
                             </div>
                         </div>
                     )

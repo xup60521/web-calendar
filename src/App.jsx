@@ -47,6 +47,9 @@ const App = () => {
   return (
     <div className="App">
       <HashRouter>
+      <div className="top-bar">
+        <p>topbar</p>
+      </div>
       <aside>
         <div>
           <h2 className="fill">Fill</h2>
@@ -80,7 +83,7 @@ const App = () => {
 
               {reduxsetting.group.map((d)=>{
                 return (
-                  <Route exact path={`/Group/name="${d.name}"`} element={<GroupPage setting={d} />} />
+                  <Route exact path={`/Group/id="${d.id}"`} element={<GroupPage setting={d} />} />
                 )
               })}
 

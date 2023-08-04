@@ -31,6 +31,13 @@ const Groupcell = ({ name, bcolor, id }) => {
       dict[i.name] = i.id;
     })
 
+    let itemquantity = 0;
+    reduxdata.map((item)=>{
+        if (item.group == id) {
+            itemquantity++;
+        }
+    })
+
     const removegroupcolor = () => {
 
         if (window.confirm("確定刪除？")) {
@@ -67,9 +74,9 @@ const Groupcell = ({ name, bcolor, id }) => {
     return (
         
         <div className="groupcell" style={{backgroundColor: bcolor}}>
-            <NavLink to={`/Group/name="${name}"`} style={{ textDecoration: 'none', color: (blackandwhite > 180 ? "black" : "white") }} >
+            <NavLink to={`/Group/id="${id}"`} style={{ textDecoration: 'none', color: (blackandwhite > 180 ? "black" : "white") }} >
                 <p>{name}</p>
-                <p>{bcolor}</p>
+                <p>{`${itemquantity} Item${(itemquantity > 1 ? "s" : "")}`}</p>
             </NavLink>
             <button className="delete" onClick={removegroupcolor}>刪除</button>
         </div>
