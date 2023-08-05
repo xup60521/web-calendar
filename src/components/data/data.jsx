@@ -51,7 +51,10 @@ const Data = ({ rerenderStatus, colorstatus }) => {
         dispatch(additem((InputData)))
     }
 
-   
+    let datacsv = "Title, Date, Group, Note, Id \n";
+    reduxdata.map(( d )=>{
+        datacsv += `${d.title}, ${d.date}, ${d.group}, "${d.note}", ${d.id} \n`;
+    })
 
     return (
         <div className="app">
@@ -95,6 +98,13 @@ const Data = ({ rerenderStatus, colorstatus }) => {
                             download="data.json"
                         >
                             {`Download Json`}
+                        </a>
+                        <a
+                            id="export"
+                            href={`data:text/csv;charset=utf-8,%EF%BB%BF` + encodeURIComponent(datacsv)}
+                            download="data.csv"
+                        >
+                            {`Download CSV`}
                         </a>
                     </div>
                     <div id="export">

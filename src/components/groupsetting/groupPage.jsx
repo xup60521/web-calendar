@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeitem, setsetting } from "../../redux/datastore";
+import { removeitem, setsetting, replaceitem } from "../../redux/datastore";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaSquareFull } from "react-icons/fa"
 
 const GroupPage = ({setting}) => {
 
-    const {name, color} = setting;
+    const {name, color, id} = setting;
     const [editmode, changeEditmode] = useState(false);
     const dispatch = useDispatch();
     const goback = useNavigate();
@@ -42,6 +42,42 @@ const GroupPage = ({setting}) => {
         cacheprofile.group[idlist.indexOf(setting.id)].color = editColor;
         dispatch(setsetting(cacheprofile));
         changeEditmode(false);
+    }
+
+    let dict = {};
+    reduxsetting.group.map((i)=>{
+      dict[i.name] = i.id;
+    })
+    
+    const deletegroup = () => {
+
+        if (window.confirm("確定刪除？")) {
+
+            let list = (new Array(reduxsetting.group)).flat().filter((i)=>i.id != id);
+            let cacheobj = Object.assign({},reduxsetting);
+            cacheobj.group = list.flat();
+            dispatch(setsetting(cacheobj));
+
+            let cachedata = (new Array(reduxdata)).flat().map((i)=>{
+                if (i.group == id) {
+                    return {
+                        "id": i.id,
+                        "title": i.title,
+                        "date": i.date,
+                        "note": i.note,
+                        "group": dict[""],
+                    }
+                } else {
+                    return i;
+                }
+            });
+            dispatch(replaceitem(cachedata));
+            goback(-1);
+
+        } else {
+            return ;
+        }   
+             
     }
 
     return (
@@ -81,11 +117,12 @@ const GroupPage = ({setting}) => {
                                 <button onClick={()=>{
                                     changeEditmode(false);
                                     resetstate();
-                                }}>
+                                }}
+                                className="defaultbutton">
                                     放棄更改
                                 </button>
-                                <button onClick={()=>{saveChange()}}>儲存</button>
-                                <button>刪除群組</button>
+                                <button onClick={()=>{saveChange()}} className="defaultbutton">儲存</button>
+                                <button onClick={()=>{deletegroup()}} className="defaultbutton">刪除群組</button>
                             </div>
                             <div id="top">                                
                                 <input type="color" id="groupcolor" value={editColor} onChange={(e)=>{changeEditColor(e.target.value)}} />

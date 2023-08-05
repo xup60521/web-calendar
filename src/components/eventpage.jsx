@@ -115,8 +115,8 @@ const EventPage = ({ item }) => {
                         return (
                             <div className="eventpagecontainer">
                                 <div>
-                                    <button onClick={()=>{goback(-1)}}>返回</button>
-                                    <button onClick={()=>changeEditmode(true)}>Edit</button>
+                                    <button onClick={()=>{goback(-1)}} className="defaultbutton">返回</button>
+                                    <button onClick={()=>changeEditmode(true)} className="defaultbutton">Edit</button>
                                 </div>                                
                                 <input className="title" type="text" value={title} readOnly />
                                 <p>{"ID: "+id}</p>
@@ -138,19 +138,26 @@ const EventPage = ({ item }) => {
                                     <button onClick={()=>{
                                         changeEditmode(false);
                                         resetstate();
-                                        }} >
+                                        }}
+                                        className="defaultbutton" >
                                         放棄更改
                                     </button>
                                     <button onClick={()=>{
                                         changeEditmode(false);
                                         savechange();
-                                    }}>儲存</button>
+                                        }}
+                                        className="defaultbutton">
+                                        儲存
+                                    </button>
                                     <button onClick={()=>{
                                         dispatch(removeitem({
                                             "id": id
                                         }));
                                         goback(-1);
-                                    }}>刪除</button>
+                                        }}
+                                        className="defaultbutton">
+                                        刪除
+                                    </button>
                                 </div>                                
                                 <input className="title" type="text" value={editTitle} onChange={(e)=>changeEditTitle(e.target.value)} />
                                 <p>{"ID: "+id}</p>
