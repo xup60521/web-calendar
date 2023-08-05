@@ -60,13 +60,13 @@ const Data = ({ rerenderStatus, colorstatus }) => {
                 <div className="importcontainer">
                     <div id="import">
                         <h3>匯入資料</h3>
-                        <input type="file" accept=".json, .csv" onChange={DataInput} />
+                        <input type="file" accept=".json, .csv" onChange={DataInput} className="" />
                         {(()=>{
                             if (Array.isArray(InputData)) {
                                 return (
                                     <div className="inputbuttoncontainer">
-                                        <button className="datainputbutton" onClick={replacedata}>取代</button>
-                                        <button className="datainputbutton" onClick={mergedata}>合併</button>
+                                        <button className="datainputbutton defaultbutton" onClick={replacedata}>取代</button>
+                                        <button className="datainputbutton defaultbutton" onClick={mergedata}>合併</button>
                                     </div>
                                 )
                             }
@@ -79,13 +79,13 @@ const Data = ({ rerenderStatus, colorstatus }) => {
                             if (InputProfile != "") {
                                 return (
                                     <div className="inputbuttoncontainer">
-                                        <button className="profileinputbutton" onClick={replaceprofile}>取代</button>
+                                        <button className="profileinputbutton defaultbutton" onClick={replaceprofile}>取代</button>
                                     </div>
                                 )
                             }
                         })()}
                     </div>
-                    <div>
+                    <div id="export">
                         <h3>匯出資料</h3>
                         <a
                             id="export"
@@ -97,7 +97,7 @@ const Data = ({ rerenderStatus, colorstatus }) => {
                             {`Download Json`}
                         </a>
                     </div>
-                    <div>
+                    <div id="export">
                         <h3>匯出設定檔</h3>
                         <a
                             id="export"

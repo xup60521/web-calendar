@@ -1,9 +1,9 @@
 import { MdDashboard, MdOutlineAnalytics } from "react-icons/md"
 import { BsFillCalendarFill } from "react-icons/bs"
-import { AiFillDatabase, AiTwotoneSetting, AiOutlinePlus } from "react-icons/ai"
+import { AiFillDatabase, AiTwotoneSetting, AiOutlinePlus, AiOutlineClose } from "react-icons/ai"
 import {FaObjectGroup} from "react-icons/fa"
 import './App.css'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { HashRouter, NavLink, Route, Routes, json } from "react-router-dom"
 import Dashboard from "./components/dashboard/dashboard"
@@ -15,7 +15,8 @@ import Setting from "./components/setting/setting"
 import GroupSetting from "./components/groupsetting/groupsetting"
 import EventPage from "./components/eventpage"
 import GroupPage from "./components/groupsetting/groupPage"
-import { v4 } from "uuid"
+import mainlogo from './icon.png'
+import { BiMenu } from "react-icons/bi"
 
 const App = () => {
 
@@ -31,14 +32,7 @@ const App = () => {
   
   /*////////////////////////////*//**////////////////////////////*/
 
-  useEffect(()=>{
-    
-    
-
-    
-
-  }, ["a"])
-
+  const [showMenu, setShowMenu] = useState(false);
 
   /*--------------------------------*/
 
@@ -48,20 +42,20 @@ const App = () => {
     <div className="App">
       <HashRouter>
       <div className="top-bar">
-        <p>topbar</p>
+        <button onClick={()=>{setShowMenu(true);}}><BiMenu /></button>
+        <a>Fill</a>
       </div>
-      <aside>
-        <div>
-          <h2 className="fill">Fill</h2>
-          
-          <NavLink to="/"><span className="navbutton"><MdDashboard /><a>Dashboard</a></span></NavLink>
-          <NavLink to="/Calendar/"><span className="navbutton"><BsFillCalendarFill /><a>Calendar</a></span></NavLink>
-          <NavLink to="/Analyse/"><span className="navbutton"><MdOutlineAnalytics /><a>Analyse</a></span></NavLink>
-          <NavLink to="/Data/"><span className="navbutton"><AiFillDatabase /><a>Data</a></span></NavLink>
-          <NavLink to="Group"><span className="navbutton"><FaObjectGroup /><a>Group</a></span></NavLink>
-          <NavLink to="/NewEvent/"><span className="navbutton"><AiOutlinePlus /><a>New Event</a></span></NavLink>
-          </div>
-          <NavLink to="/Setting/"><span className="navbutton"><AiTwotoneSetting /><a>Setting</a></span></NavLink>
+      <aside className={(showMenu ? "activated" : "")}>
+        <div>          
+          <span className="filltop"><h2 className="fill"><img src={mainlogo} alt="" /><a>Fill</a><button className="close" onClick={()=>{setShowMenu(false)}}><AiOutlineClose /></button></h2></span>
+          <NavLink to="/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><MdDashboard /><a>Dashboard</a></span></NavLink>
+          <NavLink to="/Calendar/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><BsFillCalendarFill /><a>Calendar</a></span></NavLink>
+          <NavLink to="/Analyse/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><MdOutlineAnalytics /><a>Analyse</a></span></NavLink>
+          <NavLink to="/Data/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><AiFillDatabase /><a>Data</a></span></NavLink>
+          <NavLink to="Group" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><FaObjectGroup /><a>Group</a></span></NavLink>
+          <NavLink to="/NewEvent/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><AiOutlinePlus /><a>New Event</a></span></NavLink>
+        </div>
+        <NavLink to="/Setting/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><AiTwotoneSetting /><a>Setting</a></span></NavLink>
       </aside>
       <main>
         

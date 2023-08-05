@@ -52,8 +52,8 @@ const GroupPage = ({setting}) => {
                     return (
                         <div className="groupPagecontainer">
                             <div>
-                                <button onClick={()=>{goback(-1)}}>返回</button>
-                                <button onClick={()=>changeEditmode(true)}>Edit</button>
+                                <button className="defaultbutton" onClick={()=>{goback(-1)}}>返回</button>
+                                <button className="defaultbutton" onClick={()=>changeEditmode(true)}>Edit</button>
                             </div>
                             <div id="top">
                                 <input type="color" id="groupcolor" value={color} disabled />

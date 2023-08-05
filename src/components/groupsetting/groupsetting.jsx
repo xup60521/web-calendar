@@ -49,23 +49,23 @@ const GroupSetting = ({ rerenderStatus, colorstatus }) => {
         let indexofgroup = groupinsetting.indexOf(selectedgroup);
 
         if (indexofgroup != -1) {
-            cachesetting.group[indexofgroup].color = color;
+            cachesetting.group[indexofgroup].color = e.target.value;
         } 
         else if (rawgroup.name == selectedgroup) {
             groupinsetting = cachesetting.group.map((d)=>d.id);
             indexofgroup = groupinsetting.indexOf(rawgroup.id);
-            cachesetting.group[indexofgroup].color = color;
+            cachesetting.group[indexofgroup].color = e.target.value;
             console.log("works")
         } 
         else if (indexofgroup == -1 & dict[selectedgroup] != null ) {
-            cachesetting.group[groupinsetting.indexOf(dict[selectedgroup])].color = color;
+            cachesetting.group[groupinsetting.indexOf(dict[selectedgroup])].color = e.target.value;
         }
-        else
+        else 
          {
             const uuid = v4()
             cachesetting.group.push({
                 "name": selectedgroup,
-                "color": color,
+                "color": e.target.value,
                 "id": uuid,
             })
             setrawgroup({

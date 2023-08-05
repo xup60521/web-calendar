@@ -123,7 +123,7 @@ const NewEvent = ({ rerenderStatus }) => {
                     <textarea value={note} onChange={noteChange} type="text" id="note" className="edit"/>
                     <p id="group" className="edit">群組</p>
                     <CreatableSelect isClearable options={creatableoption} onChange={(e)=>{setGroup((e == null ? "" : e.value))}} />
-                    <button type="submit" className="add" onClick={add}>新增</button>
+                    <button type="submit" className="defaultbutton" onClick={add}>新增</button>
                 </div>
                 <div></div>
             </div>
