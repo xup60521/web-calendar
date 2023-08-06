@@ -99,7 +99,7 @@ const GroupPage = ({setting}) => {
                                 {cachedata.flat().map((item, i)=>{
                                     return (
                                     <div className="groupitem">
-                                        <NavLink to={`/${item.id}/`} style={{color: "black"}}>
+                                        <NavLink to={`/${item.id}/`} style={{color: "none"}}>
                                             <h3>{item.title}</h3>
                                             <h5>{item.date}</h5>
                                         </NavLink>

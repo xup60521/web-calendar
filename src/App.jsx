@@ -2,7 +2,6 @@ import { MdDashboard, MdOutlineAnalytics } from "react-icons/md"
 import { BsFillCalendarFill } from "react-icons/bs"
 import { AiFillDatabase, AiTwotoneSetting, AiOutlinePlus, AiOutlineClose } from "react-icons/ai"
 import {FaObjectGroup} from "react-icons/fa"
-import './App.css'
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { HashRouter, NavLink, Route, Routes, json } from "react-router-dom"
@@ -16,8 +15,11 @@ import GroupSetting from "./components/groupsetting/groupsetting"
 import EventPage from "./components/eventpage"
 import GroupPage from "./components/groupsetting/groupPage"
 import mainlogo from './icon.png'
+import './App.css';
 import { BiMenu } from "react-icons/bi"
 import { Helmet } from "react-helmet"
+
+
 
 const App = () => {
 
@@ -26,6 +28,21 @@ const App = () => {
 
   /*////////////////////////////*//**////////////////////////////*/
 
+
+  
+  if ((reduxsetting["darkMode"]=="false") || (reduxsetting["darkMode"] == null)) {
+    document.documentElement.style.setProperty("--aside-background-color", "white");
+    document.documentElement.style.setProperty("--font-color", "rgb(85, 84, 84)");
+    document.documentElement.style.setProperty("--backgroun-color", "rgb(234, 235, 236)");
+  } else {
+    document.documentElement.style.setProperty("--aside-background-color", "rgb(32, 37, 40)");
+    document.documentElement.style.setProperty("--font-color", "rgb(237, 239, 253)");
+    document.documentElement.style.setProperty("--backgroun-color", "rgb(0, 0, 0)");
+  }
+
+  
+
+  
   
 
   const rerenderStatus = useRef(false);
@@ -45,7 +62,7 @@ const App = () => {
         <title>Web Calendar</title>
       </Helmet>
       <HashRouter>
-      <div className="top-bar">
+      <div className={"top-bar "+(reduxsetting["darkMode"]=="true" ? "toggleDarkModeActive" : "")}>
         <button onClick={()=>{setShowMenu(true);}}><BiMenu /></button>
         <a>Fill</a>
       </div>

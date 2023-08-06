@@ -13,7 +13,8 @@ if (JSON.parse(localStorage.getItem("user")) == null) {
 let settingcache = {};
 if (JSON.parse(localStorage.getItem("setting")) == null) {
     settingcache = {
-        "group": []
+        "group": [],
+        "darkMode": "false"
     }
     localStorage.setItem("setting", JSON.stringify(settingcache));
 } else {

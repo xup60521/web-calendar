@@ -3,10 +3,11 @@
 :root {
   --bd:1px solid red;
   --font: 'Noto Sans TC';
-  --font-color:  rgb(85, 84, 84);
-  --active-color: rgb(30, 49, 177);
+  --font-color:  rgb(237, 239, 253);
+  --active-color: rgb(139, 145, 188);
   --box-shadow: 0 2rem 3rem rgba(85, 84, 84, 0.208);
-  --backgroun-color: rgb(234, 235, 236);
+  --backgroun-color: rgb(0, 0, 0);
+  --aside-background-color: rgb(32, 37, 40);
 }
 
 * {
@@ -21,6 +22,7 @@ div.App {
   height: 100vh;
   display: flex;
   background-color: var(--backgroun-color);
+  transition: all 0.1s ease;
 }
 
 div.top-bar {
@@ -35,7 +37,7 @@ aside {
   margin: 1.5rem;
   margin-right: 0rem;
 
-  background-color: white;
+  background-color: var(--aside-background-color);
   width: 9rem;
   padding: 2rem;
   padding-left: 0rem;
@@ -45,7 +47,7 @@ aside {
   color: var(--font-color);
   box-shadow: var(--box-shadow);
   flex-shrink: 0;
-  
+  transition: all 0.1s ease;
 }
 
 aside > div > span > h2 > img  {
@@ -122,12 +124,13 @@ main {
   overflow-y: scroll;
   border-radius: 0.6rem;
 
-  background-color: white;
-
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
   padding: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 0rem;
   box-shadow: var(--box-shadow);
+  transition: all 0.1s ease;
 }
 
 div.content {
@@ -333,6 +336,11 @@ div.item {
   justify-content: space-between;
 }
 
+div.item > a {
+  flex-shrink: 1;
+  overflow-x: scroll;
+}
+
 button.delete {
   border: 2px solid white;
   border-radius: 5px;
@@ -428,7 +436,8 @@ div.groupPagecontainer > div#top > input#groupname {
   flex-grow: 1;
   flex-shrink: 1;
   width: 1rem;
-  
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
 }
 
 div.groupPagecontainer > div#top > input#groupcolor {
@@ -478,11 +487,15 @@ div.eventpagecontainer >  input.title {
   border: none;
   font-size: xx-large;
   font-weight: bold;
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
 }
 
 div#forthline {
   align-items: center;
   display: flex;  
+  width: 100%;
+  color: var(--font-color);
 }
 
 div#forthline > input.date {
@@ -492,16 +505,27 @@ div#forthline > input.date {
   font-size: medium;
   margin-right: 0.5rem;
   flex-shrink: 0;
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
+}
+
+div#forthline:nth-child(2) {
+  flex-grow: 1;
+  flex-shrink: 1;
+} 
+
+div#forthline:nth-child(2)  {
+  transform: translateY(1rem);
 }
 
 div#forthline >  a > input.group {
   border: none;
   font-weight: bold;
-  color: black;
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
   font-size: medium;
+  width: 100%;
   margin-left: 0.3rem;
-  flex-grow: 1;
-  flex-shrink: 1;
 }
 
 div.forthline:last-child {
@@ -509,7 +533,7 @@ div.forthline:last-child {
 }
 
 div.eventpagecontainer > div#forthline > a > * {
-  transform: translateY(0.1rem);
+  
   font-size: medium;
 }
 
@@ -523,6 +547,13 @@ div#note > textarea.note {
   height: 100%;
   border: none;
   resize: none;
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
+}
+
+div.groupitem > a {
+  color: var(--font-color);
+  background-color: var(--aside-background-color);
 }
 
 /* Data page */
@@ -538,6 +569,36 @@ div.importcontainer > div {
   margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
+/* setting */ 
+
+button.toggledarkmode {
+  transition: all 0.1s ease;
+  width: 2rem;
+  height: 2rem;
+  z-index: 10;
+  border: none;
+  margin: 0;
+}
+
+button.toggledarkmode#left {
+  background-color: var(--active-color);
+  color: white;
+}
+
+button.toggledarkmode#left.toggleDarkModeActive {
+  background-color: rgb(63, 62, 62);
+  cursor: pointer;
+}
+
+button.toggledarkmode#right {
+  background-color: var(--backgroun-color);
+  cursor: pointer;
+}
+
+button.toggledarkmode#right.toggleDarkModeActive {
+  background-color: var(--active-color);
+  color: white;
+}
 
 @media (max-width: 980px) {
   aside > div > a > span > a {
@@ -574,12 +635,43 @@ div.importcontainer > div {
 }
 
 @media (max-width: 560px) {
+  
   div.App {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
   }
+
   div.top-bar {
     display: block;
+    height: 2.1rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    color: var(--font-color);
+    transition: all 0.1s ease;
   }
+
+  div.top-bar.toggleDarkModeActive {
+    background-color: var(--backgroun-color);
+    color: var(--font-color);
+  }
+
+  div.top-bar.toggleDarkModeActive > button {
+    background-color: var(--backgroun-color);
+    color: var(--font-color);
+  }
+
+  div.top-bar > button {
+    transform: translateY(0.15rem);
+    transition: all 0.1s ease;
+  }
+
+  main {
+    height: 10rem;
+    flex-wrap: 1;
+    flex-grow: 1;
+  }
+
   aside {
     position: absolute;
     top: 0rem;
@@ -593,7 +685,6 @@ div.importcontainer > div {
     margin: 0rem;
     border: none;
     border-radius: 0;;
-    background-color: white;
     width: 9rem;
     padding: 2rem;
     padding-left: 0rem;
@@ -632,7 +723,8 @@ div.importcontainer > div {
   aside > div > span > h2 > button {
     display: block;
     border: none;
-    background-color: white;
+    background-color: var(--aside-background-color);
+    color: var(--font-color);
     font-size: large;
     margin-left: 2rem;
     margin-top: 0.25rem;
