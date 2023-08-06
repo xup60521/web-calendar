@@ -17,6 +17,7 @@ import EventPage from "./components/eventpage"
 import GroupPage from "./components/groupsetting/groupPage"
 import mainlogo from './icon.png'
 import { BiMenu } from "react-icons/bi"
+import { Helmet } from "react-helmet"
 
 const App = () => {
 
@@ -40,6 +41,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Web Calendar</title>
+      </Helmet>
       <HashRouter>
       <div className="top-bar">
         <button onClick={()=>{setShowMenu(true);}}><BiMenu /></button>
