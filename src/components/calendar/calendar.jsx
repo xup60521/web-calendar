@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Month from "./month";
 import Day from "./day";
 import Week from "./week";
+import { useSelector } from "react-redux";
 
 
 const Calendar = ({ rerenderStatus }) => {
@@ -9,8 +10,8 @@ const Calendar = ({ rerenderStatus }) => {
     /*---------------------------------*/
 
     
-    
-
+    const reduxsetting = useSelector((state)=> state.data.setting);
+    const darkModeOn = (reduxsetting["darkMode"] == "true") ? "activated" : "";
 
 
     /*---------------------------------*/
@@ -24,7 +25,7 @@ const Calendar = ({ rerenderStatus }) => {
         <div>
             <div className="cal-nav">
                 <h1>Calendar</h1>
-                <select defaultValue="Day" id="changecalendarviewtype"  onChange={changeview}>
+                <select  defaultValue="Day" id="changecalendarviewtype"  onChange={changeview}>
                     <option value="Day">Day</option>
                     <option value="Week">Week</option>
                     <option value="Month">Month</option>

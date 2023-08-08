@@ -33,9 +33,12 @@ const Day = ({ rerenderStatus }) => {
         }
     }
 
+    const reduxsetting = useSelector((state)=> state.data.setting);
+    const darkModeOn = (reduxsetting["darkMode"] == "true") ? "toggleDarkModeActive" : "";
+
     return (
         <div className="datecontainer">
-            <div className="selectDate">
+            <div className={"selectDate "+darkModeOn}>
                 <button className="changedate" id="lastdate" onClick={prevdate} ><AiOutlineDoubleLeft/></button>
                 <input className="changedate" type="date" value={selectdate} onChange={changedate} />
                 <button className="changedate" id="nextdate" onClick={nextdate} ><AiOutlineDoubleRight/></button>

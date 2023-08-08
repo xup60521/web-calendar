@@ -10,6 +10,13 @@
   --aside-background-color: rgb(32, 37, 40);
 }
 
+div.modal#calendarweekclickevent {
+  color: var(--font-color);
+  width: 70%;
+  margin: auto;
+  padding: 1rem;
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -133,15 +140,17 @@ main {
   transition: all 0.1s ease;
 }
 
+
+
 div.content {
   height: 100%;
-  
 }
 
 div.content > div {
   animation: fadeIn 0.3s;
   animation-timing-function: cubic-bezier(.03,.69,.33,.93);
 }
+
 
 
 
@@ -183,12 +192,19 @@ div.cal-nav {
   display: flex;
   justify-content: space-between;
   height: 9vh;
-  
-  
 }
 
 div.cal-nav > h1 {
   color: var(--font-color);
+}
+
+div.cal-nav > select{
+  border: none;
+  border-radius: 0.1rem;
+  text-align: center;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+  cursor: pointer;
 }
 
 div.calview {
@@ -207,6 +223,10 @@ input.changemonth {
   margin-bottom: 0.3rem;
   height: 1.5rem;
   border: none;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 button.changemonth {
@@ -215,6 +235,9 @@ button.changemonth {
   margin: 0.5rem;
   margin-bottom: 0rem;
   margin-top: 0.1rem;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+  cursor: pointer;
 }
 
 div.monthcontainer > div.caltop {
@@ -283,6 +306,8 @@ input.changeweek {
   margin-bottom: 0.3rem;
   height: 1.5rem;
   border: none;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
 }
 
 button.changeweek {
@@ -290,6 +315,9 @@ button.changeweek {
   border: none;
   margin: 0.5rem;
   margin-top: 0.1rem;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+  cursor: pointer;
 }
 
 div.calweekcontainer {
@@ -309,6 +337,7 @@ div.weekdisplay {
 div.selectDate {
   display: flex;
   justify-content: center;
+  
 }
 
 button.changedate {
@@ -316,6 +345,9 @@ button.changedate {
   border: none;
   margin: 0.5rem;
   margin-top: 0.1rem;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+  cursor: pointer;
 }
 
 input.changedate {
@@ -324,6 +356,12 @@ input.changedate {
   margin-bottom: 0.3rem;
   height: 1.5rem;
   border: none;
+  background-color: var(--aside-background-color);
+  color: var(--font-color);
+}
+
+div.selectDate.toggleDarkModeActive {
+
 }
 
 /* date > item */
@@ -338,7 +376,7 @@ div.item {
 
 div.item > a {
   flex-shrink: 1;
-  overflow-x: scroll;
+  overflow: hidden;
 }
 
 button.delete {
@@ -734,7 +772,7 @@ button.toggledarkmode#right.toggleDarkModeActive {
   }
   div.top-bar {
     width: 100%;
-    background-color: #cdcdcd;
+    background-color: var(--backgroun-color);
     text-align: center;
     padding: 0.2rem;
     font-size: larger;
@@ -744,7 +782,7 @@ button.toggledarkmode#right.toggleDarkModeActive {
     position: absolute;
     left: 0.3rem;
     border: none;
-    background-color: #cdcdcd;
+    background-color: var(--backgroun-color);
     font-size: large;
 
   }
