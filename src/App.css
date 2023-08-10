@@ -96,6 +96,13 @@ span.navbutton:hover {
   transition: all 0.2s ease;
 }
 
+a.active > span.navbutton {
+  padding-left: 1.7rem;
+  color: var(--active-color);
+  transition: all 0.2s ease;
+  border-left: 0.3rem solid var(--active-color);
+}
+
 span.navbutton:active {
   background-color: var(--backgroun-color);
 }
