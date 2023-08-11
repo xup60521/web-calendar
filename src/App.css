@@ -17,6 +17,10 @@ div.modal#calendarweekclickevent {
   padding: 1rem;
 }
 
+div.mask {
+  display: none;
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -164,6 +168,11 @@ div.content > div {
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1;}
+  to {opacity: 0;}
 }
 
 /* new event */
@@ -799,6 +808,19 @@ button.toggledarkmode#right.toggleDarkModeActive {
     margin: 0.5rem;
     padding-bottom: 1.5rem;
   }
+
+  div.mask.activated {
+    display: block;
+    position: absolute;
+    z-index: 9;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s;
+  }
+
 }
 
 @media (max-height: 610px) {

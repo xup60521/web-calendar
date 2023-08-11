@@ -78,6 +78,7 @@ const App = () => {
         </div>
         <NavLink to="/Setting/" onClick={()=>{setShowMenu(false)}}><span className="navbutton"><AiTwotoneSetting /><a>Setting</a></span></NavLink>
       </aside>
+      <div className={`mask ${(showMenu ? "activated" : "")}`} onClick={()=>{setShowMenu(false)}}></div>
       <main>
         
         <div className="content">
